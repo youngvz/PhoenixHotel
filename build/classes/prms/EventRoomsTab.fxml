@@ -53,23 +53,22 @@
     
     <TableView fx:id="eventRoomsTable" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="always" GridPane.vgrow="always" maxWidth="Infinity">
         <columns>
-             <TableColumn fx:id="roomNameCol" text="Room">
-                 <cellValueFactory><PropertyValueFactory property="roomName" /></cellValueFactory>
-             </TableColumn>
-             <TableColumn fx:id="priceCol" text="Price">
-                 <cellValueFactory><PropertyValueFactory property="price" /></cellValueFactory>
-             </TableColumn>
-             <TableColumn fx:id="capacityCol" text="Capacity">
-                 <cellValueFactory><PropertyValueFactory property="maxCapacity" /></cellValueFactory>
-             </TableColumn>
-             <TableColumn fx:id="stageCol" text="Has Stage">
-                 <cellValueFactory><PropertyValueFactory property="hasStage" /></cellValueFactory>
-             </TableColumn>
-             <TableColumn fx:id="avCol" text="Has A/V">
-                 <cellValueFactory><PropertyValueFactory property="hasAudioVisual" /></cellValueFactory>
-             </TableColumn>
-
-        </columns>    
+                              <TableColumn fx:id="companyName" minWidth="200.0" prefWidth="200.0" text="Company Name">
+                                <cellValueFactory>
+                                        <PropertyValueFactory property="companyName" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="roomName" minWidth="200.0" prefWidth="200.0" text="Room Name">
+                                <cellValueFactory>
+                                        <PropertyValueFactory property="roomName" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="dateReserved" minWidth="200.0" prefWidth="200.0" text="Date Reserved">
+                                <cellValueFactory>
+                                        <PropertyValueFactory property="dateReserved" />
+                                </cellValueFactory>
+                            </TableColumn>         
+                          </columns>  
     </TableView>
     
 </GridPane>
