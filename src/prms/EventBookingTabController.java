@@ -11,9 +11,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -128,7 +130,98 @@ public class EventBookingTabController implements Initializable {
 
     @FXML
     void handleEventInvoice(ActionEvent event) {
-        ConfirmationLabel.setText("Invoice created!");
+
+        System.out.println("Button Pressed");
+        if (ccNumberTextField.getText().isEmpty() || ccNumberTextField.getText() == null){
+          ConfirmationLabel.setText("Enter values for credit card number!");
+          return;
+        }
+        
+        if (ccExpirationTextField.getText().isEmpty() || ccExpirationTextField.getText() == null){
+          ConfirmationLabel.setText("Enter values for credit card exipration!");
+          return;
+        }
+        
+        if (ccCodeTextField.getText().isEmpty() || ccCodeTextField.getText() == null){
+          ConfirmationLabel.setText("Enter values for credit card code!");
+          return;
+        }
+        
+
+//        ccExpirationTextField
+//        
+//        
+        String room = roomChoiceBox.getValue();
+        String invoiceUID = UUID.randomUUID().toString();
+        //String creditCardNum = ccNumberTextField.getText();
+        int creditCardNum = 00010102011;
+        int creditCardExp = 0115;
+        String customerName = companyNameLabel.getText();
+        //String creditCardExp = ccExpirationTextField.getText();
+        String time = Instant.now().toString();
+        double price = 129.0;
+        
+        Connection c = null;
+        Connection c2 = null;
+        
+        Statement stmt = null;
+        Statement stmt2 = null;
+        
+        try {
+            c = DriverManager.getConnection(prms.PRMS.DBFILE);
+            stmt = c.createStatement();            
+
+            // We can now go ahead and insert the new employee
+            String sql = "INSERT INTO invoices VALUES ('" + invoiceUID + "', '" + customerName + "', '" + creditCardNum + "', '" + creditCardExp + "', '" + price + "' );";
+            stmt.executeUpdate(sql);
+
+            stmt.close();
+            c.close();
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        
+        try {
+            c2 = DriverManager.getConnection(prms.PRMS.DBFILE);
+            stmt2 = c2.createStatement();            
+
+            // We can now go ahead and insert the new employee
+            String sql = "INSERT INTO billableItems VALUES ('" + invoiceUID + "', '" + invoiceUID + "', '" + room + "', '" + price + "', '" + time + "' );";
+            stmt2.executeUpdate(sql);
+
+            stmt2.close();
+            c2.close();
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        
+        
+        
+//                
+//            // Create billableItems table if it doesn't already exist
+//            sql = "CREATE TABLE IF NOT EXISTS billableItems (\n"
+//                    + " billableUID     TEXT    PRIMARY KEY     NOT NULL,\n"
+//                    + " invoiceUID      TEXT    NOT NULL,\n"
+//                    + " billableName    TEXT    NOT NULL,\n"
+//                    + " price           REAL    NOT NULL,\n"
+//                    + " time            TEXT    NOT NULL\n"
+//                    + ");";
+//            stmt.execute(sql);
+        
+        
+
+
+        //Insert Invoice and BillableItem into Database
+        
+        
+//        Invoice eventInvoice = new Invoice(invoiceUID, customerName, creditCardNum, creditCardExp);
+//        BillableItem eventBill = new BillableItem(room, price, time, invoiceUID, invoiceUID);
+//        
+//        
         
         EventBookingTabPane.getSelectionModel().select(1);
 
